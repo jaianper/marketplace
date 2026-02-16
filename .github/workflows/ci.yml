@@ -31,6 +31,8 @@ jobs:
         run: ./gradlew spotbugsMain
 
       - name: Vulnerability Scan (OWASP Dependency Check)
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: ./gradlew dependencyCheckAnalyze
 
       - name: Build and Test

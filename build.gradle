@@ -72,6 +72,12 @@ spotbugs {
     ignoreFailures = true // Recommend checking reports first before failing build
 }
 
+dependencyCheck {
+    nvd {
+        apiKey = System.getenv("NVD_API_KEY")
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }
