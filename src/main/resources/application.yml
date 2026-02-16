@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: marketplace
+
+jwt:
+  secret: ${JWT_SECRET:MySuperSecretKeyForDevelopmentPurposeOnly123456789!}
+  expiration: ${JWT_EXPIRATION:3600}
+
+  # Reactive R2DBC Configuration (PostgreSQL - Supabase)
+  r2dbc:
+    url: ${SPRING_R2DBC_URL:r2dbc:postgresql://localhost:5432/marketplace}
+    username: ${SPRING_R2DBC_USERNAME:postgres}
+    password: ${SPRING_R2DBC_PASSWORD:postgres}
+    properties:
+      sslMode: ${SPRING_R2DBC_SSL_MODE:prefer}
+    pool:
+      initial-size: 5
+      max-size: 20
+      max-life-time: 30m
+
+  # Reactive MongoDB Configuration (Atlas)
+  data:
+    mongodb:
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/marketplace}
+      auto-index-creation: true
+
+  # Flyway Configuration (JDBC for Migrations)
+  flyway:
+    enabled: true
+    url: ${SPRING_FLYWAY_URL:jdbc:postgresql://localhost:5432/marketplace}
+    user: ${SPRING_FLYWAY_USER:postgres}
+    password: ${SPRING_FLYWAY_PASSWORD:postgres}
+    baseline-on-migrate: true
+
+logging:
+  level:
+    org.springframework.r2dbc: INFO
+    org.springframework.data.r2dbc: INFO
+    io.r2dbc.postgresql: INFO
