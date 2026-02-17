@@ -59,6 +59,8 @@ dependencies {
     testImplementation 'org.testcontainers:r2dbc'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.13.0'
+
+    implementation 'io.github.cdimascio:dotenv-java:3.2.0'
 }
 
 spotless {

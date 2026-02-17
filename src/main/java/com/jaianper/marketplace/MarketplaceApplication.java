@@ -11,18 +11,11 @@ import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 public class MarketplaceApplication {
 
   public static void main(String[] args) {
-    try (var lines = java.nio.file.Files.lines(java.nio.file.Paths.get(".env"))) {
-      lines
-          .filter(line -> line.contains("=") && !line.startsWith("#"))
-          .forEach(
-              line -> {
-                String[] parts = line.split("=", 2);
-                if (parts.length == 2) {
-                  System.setProperty(parts[0].trim(), parts[1].trim());
-                }
-              });
-    } catch (Throwable e) {
-      // Ignore if .env missing
+    try {
+      io.github.cdimascio.dotenv.Dotenv dotenv = io.github.cdimascio.dotenv.Dotenv.configure().ignoreIfMissing().load();
+      dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
+    } catch (Exception e) {
+      // Ignore
     }
     SpringApplication.run(MarketplaceApplication.class, args);
   }
